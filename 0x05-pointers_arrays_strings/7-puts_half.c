@@ -31,7 +31,7 @@ _putchar('\n');
 }
 
 /**
-*_str_length - Computes the length of a string.
+*_strlen - Computes the length of a string.
 *@s: The string to compute the length of.
 *Return: The length of the string.
 */
