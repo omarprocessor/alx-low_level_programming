@@ -1,127 +1,53 @@
-#include "main.h"
-
+#include <stdio.h>
+#include <string.h>
 /**
- * infinite_add - adds two integers stored as strings
- * @n1: first integer string to add
- * @n2: second integer string to add
- * @r: array to store resulting string in
- * @size_r: size of array r
- * Return: the summed string in r. If r is too small for the result, return (0);
+ * infinite_add - Adds two numbers represented as strings
+ * @n1: First number as a string.
+ * @n2: Second number as a string.
+ * @r: Buffer to store the result.
+ * @size_r: Size of the buffer 'r'.
+ *
+ * Return: Pointer to 'r', or 0 if result cannot fit in 'r'.
  */
+
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-int carry = 0, index = 0, index2;
+int len1 = strlen(n1);
+int len2 = strlen(n2);
+int carry = 0;
+int i = len1 - 1;
+int j = len2 - 1;
+int k = 0;
 
-size_r--;
-r[size_r] = 0;
+int start, end;
+start = 0;
+end = k - 1;
 
-while (*n1 && *n2)
-{
-index = add_digits(n1, n2, r, size_r, &carry);
-if (index == -1)
+if (len1 >= size_r || len2 >= size_r)
 return (0);
-n1--;
-n2--;
-}
 
-while (*n1)
+while (i >= 0 || j >= 0 || carry > 0)
 {
-index = add_remaining_digits(n1, r, size_r, &carry);
-if (index == -1)
+int digit1 = (i >= 0) ? n1[i--] - '0' : 0;
+int digit2 = (j >= 0) ? n2[j--] - '0' : 0;
+int sum = digit1 + digit2 + carry;
+carry = sum / 10;
+
+if (k >= size_r - 1)
 return (0);
-n1--;
+
+r[k++] = (sum % 10) + '0';
 }
 
-while (*n2)
+r[k] = '\0';
+
+for (; start < end; start++, end--)
 {
-index = add_remaining_digits(n2, r, size_r, &carry);
-if (index == -1)
-return (0);
-n2--;
+char temp = r[start];
+r[start] = r[end];
+r[end] = temp;
 }
 
-if (carry)
-{
-r[index++] = '1';
-r[index] = 0;
-}
-else
-{
-r[index--] = 0;
-}
-
-reverse_str(r, index + 1);
 return (r);
-}
-
-/**
- * add_digits - Adds two digits and manages carry
- * @n1: pointer to first digit character
- * @n2: pointer to second digit character
- * @r: result array
- * @size_r: size of the result array
- * @carry: pointer to carry integer
- * Return: the next index to fill, or -1 if overflow occurs
- */
-int add_digits(char *n1, char *n2, char *r, int size_r, int *carry)
-{
-int index = 0;
-r[index] = *n2 - '0' + *n1 + *carry;
-*carry = 0;
-
-if (r[index] > '9')
-{
-(*carry)++;
-r[index] -= 10;
-}
-
-if (size_r == index && (n1 != 0 || n2 != 0 || *carry == 1))
-return (-1);
-
-return (index + 1);
-}
-
-/**
- * add_remaining_digits - Adds remaining digits and manages carry
- * @n: pointer to digit character
- * @r: result array
- * @size_r: size of the result array
- * @carry: pointer to carry integer
- * Return: the next index to fill, or -1 if overflow occurs
- */
-int add_remaining_digits(char *n, char *r, int size_r, int *carry)
-{
-int index = 0;
-r[index] = *n + *carry;
-*carry = 0;
-
-if (r[index] > '9')
-{
-*carry = 1;
-r[index] -= 10;
-}
-
-if (size_r == index && (n != 0 || *carry == 1))
-return (-1);
-
-return (index + 1);
-}
-
-/**
- * reverse_str - Reverses a string in place
- * @str: the string to reverse
- * @len: the length of the string
- */
-void reverse_str(char *str, int len)
-{
-int i, j;
-char temp;
-
-for (i = 0, j = len - 1; i < j; i++, j--)
-{
-temp = str[i];
-str[i] = str[j];
-str[j] = temp;
-}
 }
 
