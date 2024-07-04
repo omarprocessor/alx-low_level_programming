@@ -1,27 +1,26 @@
 #include "main.h"
-
 /**
-* print_number - Prints an integer using _putchar.
-* @n: The integer to print.
-*/
+ * print_number - Function that prints an integer.
+ * @n: int type number
+ * Description:use _putchar to print.
+ */
 void print_number(int n)
 {
-if (n < 0)
-{
-_putchar('-');
-n = -n;
+	unsigned int b;
+
+	b = n;
+	if (n < 0)
+	{
+		_putchar('-');
+		b = -n;
+	}
+	if (b / 10 != 0)
+	{
+		print_number(b / 10);
+	}
+	_putchar((b % 10) + '0');
 }
 
-if (n == 0)
-{
-_putchar('0');
-return;
-}
 
-if (n / 10 != 0)
-{
-print_number(n / 10);
-}
-_putchar(n % 10 + '0');
-}
+
 
