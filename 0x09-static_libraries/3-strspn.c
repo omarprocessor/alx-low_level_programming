@@ -1,27 +1,30 @@
 #include "main.h"
+
 /**
- * _strspn - Entry point
- * @s: input
- * @accept: input
- * Return: Always 0 (Success)
+ * _strspn - gets the length of a prefix substring
+ * @s: segment to return bytes from
+ * @accept: the bytes to include
+ * Return: the number of bytes in the initial segment of @s which consist only
+ * of bytes from @accept
  */
 unsigned int _strspn(char *s, char *accept)
 {
-unsigned int n = 0;
-int r;
-while (*s)
+int i, j;
+int c = 0;
+
+for (i = 0; s[i] != '\0'; i++)
 {
-for (r = 0; accept[r]; r++)
+if (s[i] != 32)
 {
-if (*s == accept[r])
+for (j = 0; accept[j] != '\0'; j++)
 {
-n++;
-break;
+if (s[i] == accept[j])
+c++;
 }
-else if (accept[r + 1] == '\0')
-return (n);
 }
-s++;
+else
+return (c);
 }
-return (n);
+return (c);
 }
+
