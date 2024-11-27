@@ -6,27 +6,26 @@ NAME = school
 CFLAGS = -Wall -Werror -Wextra -pedantic
 RM = rm -f
 
-# All rule: builds your executable
+# All rule
 all: $(NAME)
 
 # Create the executable
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+$(NAME): $(SRC)
+	$(CC) $(CFLAGS) -o $(NAME) $(SRC)
 
-# Rule to create object files
-$(OBJ): %.o: %.c m.h
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean rule: deletes all Emacs and Vim temporary files along with the executable
+# Clean rule: delete Emacs, Vim temp files and executable
 clean:
 	$(RM) $(NAME) *~ \#*#
 
-# Oclean rule: deletes the object files
+# Oclean rule: delete object files
 oclean:
 	$(RM) $(OBJ)
 
-# Fclean rule: deletes all Emacs and Vim temporary files, the executable, and the object files
+# Fclean rule: delete all, temp files, object files, and executable
 fclean: clean oclean
 
-# Re rule: forces recompilation of all source files
+# Re rule: forces recompilation
 re: fclean all
+
+# Prevent compilation if m.h is missing
+$(NAME): $(SRC) m.h
