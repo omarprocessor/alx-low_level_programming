@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 /**
  * struct listint_s - singly linked list
  *
@@ -32,5 +33,8 @@ int linear_search(int *array, size_t size, int value);
 int binary_search(int *array, size_t size, int value);
 
 int jump_search(int *array, size_t size, int value);
+void free_list(listint_t *list);
+void print_list(const listint_t *list);
+listint_t *create_list(int *array, size_t size);
 
 #endif /* SEARCH_ALGOS_H */
